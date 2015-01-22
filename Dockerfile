@@ -1,7 +1,7 @@
 #
 # RabbitMQ Dockerfile
 #
-# https://github.com/dockerfile/rabbitmq
+# https://github.com/marcelotmelo/rabbitmq
 #
 
 # Pull base image.
@@ -11,6 +11,7 @@ FROM dockerfile/ubuntu
 ADD bin/rabbitmq-start /usr/local/bin/
 ADD etc/rabbitmq.config /etc/rabbitmq/
 ADD etc/rabbitmq.json /etc/rabbitmq/
+ADD etc/.erlang.cookie /var/lib/rabbitmq/
 
 # Install RabbitMQ.
 RUN \
@@ -23,14 +24,14 @@ RUN \
   chmod +x /usr/local/bin/rabbitmq-start
 
 # Define environment variables.
-ENV RABBITMQ_LOG_BASE /var/rabbit/data/log
-ENV RABBITMQ_MNESIA_BASE /var/rabbit/data/mnesia
+ENV RABBITMQ_LOG_BASE /var/log/rabbitmq
+ENV RABBITMQ_MNESIA_BASE /var/lib/rabbitmq/mnesia
 
 # Define mount points.
-VOLUME ["/var/rabbit/data/log", "/var/rabbit/data/mnesia"]
+VOLUME ["/var/log/rabbitmq", "/var/lib/rabbitmq/mnesia"]
 
 # Define working directory.
-WORKDIR /var/rabbit/
+WORKDIR /var/lib/rabbitmq/
 
 # Define default command.
 CMD ["rabbitmq-start"]
