@@ -15,7 +15,6 @@ ADD etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 
 # Install RabbitMQ.
 RUN \
-  chown rabbitmq. /var/lib/rabbitmq/.erlang.cookie && \
   chmod 600 /var/lib/rabbitmq/.erlang.cookie && \
   wget -qO - https://www.rabbitmq.com/rabbitmq-signing-key-public.asc | apt-key add - && \
   echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.list.d/rabbitmq.list && \
@@ -23,7 +22,8 @@ RUN \
   DEBIAN_FRONTEND=noninteractive apt-get install -y rabbitmq-server && \
   rm -rf /var/lib/apt/lists/* && \
   rabbitmq-plugins enable rabbitmq_management rabbitmq_federation rabbitmq_federation_management && \
-  chmod +x /usr/local/bin/rabbitmq-start
+  chmod +x /usr/local/bin/rabbitmq-start 
+#  chown rabbitmq. /var/lib/rabbitmq/.erlang.cookie && \
 
 # Define environment variables.
 ENV RABBITMQ_LOG_BASE /var/log/rabbitmq
