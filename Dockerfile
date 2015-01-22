@@ -11,7 +11,7 @@ FROM dockerfile/ubuntu
 ADD bin/rabbitmq-start /usr/local/bin/
 ADD etc/rabbitmq.config /etc/rabbitmq/
 ADD etc/rabbitmq.json /etc/rabbitmq/
-ADD etc/.erlang.cookie /var/lib/rabbitmq/
+ADD etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 
 # Install RabbitMQ.
 RUN \
