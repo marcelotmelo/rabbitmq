@@ -2,7 +2,8 @@
     "rabbit_version":"3.4.3",
     "users":[{
         "name":"mule",
-        "password":"mul3r@bb1t"
+        "password":"mul3r@bb1t",
+        "tags":[]
     }],
     "vhosts":[{
         "name":"/"
