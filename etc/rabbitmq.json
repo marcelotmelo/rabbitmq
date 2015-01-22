@@ -1,1 +1,1 @@
-{"rabbit_version":"3.4.3","users":[{"name":"mule","password":"mul3r@bb1t"],"vhosts":[{"name":"/"}],"permissions":[{"user":"mule","vhost":"/","configure":"^mule.*","write":".*","read":".*"}],"parameters":[],"policies":[],"queues":[],"exchanges":[],"bindings":[]}
+{"rabbit_version":"3.4.3","users":[{"name":"mule","password":"mul3r@bb1t","tags":"administrator"}],"vhosts":[{"name":"/mule"}],"permissions":[{"user":"mule","vhost":"/","configure":"^mule.*","write":".*","read":".*"}],"parameters":[],"policies":[],"queues":[],"exchanges":[],"bindings":[]}
