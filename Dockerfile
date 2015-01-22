@@ -9,6 +9,8 @@ FROM dockerfile/ubuntu
 
 # Add files.
 ADD bin/rabbitmq-start /usr/local/bin/
+ADD etc/rabbitmq.config /etc/rabbitmq/
+ADD etc/rabbitmq.json /etc/rabbitmq/
 
 # Install RabbitMQ.
 RUN \
@@ -17,19 +19,18 @@ RUN \
   apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y rabbitmq-server && \
   rm -rf /var/lib/apt/lists/* && \
-  rabbitmq-plugins enable rabbitmq_management && \
-  echo "[{rabbit, [{loopback_users, []}]}]." > /etc/rabbitmq/rabbitmq.config && \
+  rabbitmq-plugins enable rabbitmq_management rabbitmq_federation rabbitmq_federation_management && \
   chmod +x /usr/local/bin/rabbitmq-start
 
 # Define environment variables.
-ENV RABBITMQ_LOG_BASE /data/log
-ENV RABBITMQ_MNESIA_BASE /data/mnesia
+ENV RABBITMQ_LOG_BASE /var/rabbit/data/log
+ENV RABBITMQ_MNESIA_BASE /var/rabbit/data/mnesia
 
 # Define mount points.
-VOLUME ["/data/log", "/data/mnesia"]
+VOLUME ["/var/rabbit/data/log", "/var/rabbit/data/mnesia"]
 
 # Define working directory.
-WORKDIR /data
+WORKDIR /var/rabbit/
 
 # Define default command.
 CMD ["rabbitmq-start"]
