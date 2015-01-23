@@ -27,3 +27,6 @@ This repository contains **Dockerfile** of [RabbitMQ](http://www.rabbitmq.com/) 
 #### Run `rabbitmq-server` w/ persistent shared directories.
 
     docker run -d -p 5672:5672 -p 15672:15672 -v <log-dir>:/data/log -v <data-dir>:/data/mnesia dockerfile/rabbitmq
+docker run -p 5672:5672 -p 15672:15672 --name rabbit1 -e HOSTNAME=rabbit1 -d marcelotmelo/rabbitmq-cluster
+docker run -p 5673:5672 -p 15673:15672 --name rabbit2 -e HOSTNAME=rabbit2 -e CLUSTER_WITH=rabbit1 --link rabbit1:rabbit1 -d marcelotmelo/rabbitmq-cluster
+docker run -p 5674:5672 -p 15674:15672 --name rabbit3 -e HOSTNAME=rabbit3 -e CLUSTER_WITH=rabbit1 --link rabbit1:rabbit1 --link rabbit2:rabbit2 -d marcelotmelo/rabbitmq-cluster

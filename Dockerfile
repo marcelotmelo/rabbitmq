@@ -1,17 +1,17 @@
 #
 # RabbitMQ Dockerfile
 #
-# https://github.com/marcelotmelo/rabbitmq
+# https://github.com/marcelotmelo/rabbitmq-cluster
 #
 
 # Pull base image.
 FROM dockerfile/ubuntu
 
 # Add files.
-ADD bin/rabbitmq-start /usr/local/bin/
-ADD etc/rabbitmq.config /etc/rabbitmq/
-ADD etc/rabbitmq.json /etc/rabbitmq/
-ADD etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
+COPY bin/rabbitmq-start /usr/local/bin/rabbitmq-start 
+COPY etc/rabbitmq.config /etc/rabbitmq/rabbitmq.config 
+COPY etc/rabbitmq.json /etc/rabbitmq/rabbitmq.json 
+COPY etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 
 # Install RabbitMQ.
 RUN \
@@ -41,3 +41,7 @@ CMD ["rabbitmq-start"]
 # Expose ports.
 EXPOSE 5672
 EXPOSE 15672
+
+# Cluster ports.
+EXPOSE 4369
+EXPOSE 25672 
