@@ -5,6 +5,8 @@
 #
 # based on https://github.com/dockerfile/rabbitmq
 
+MAINTAINER marcelomelofilho@gmail.com
+
 # Pull base image.
 FROM dockerfile/ubuntu
 
