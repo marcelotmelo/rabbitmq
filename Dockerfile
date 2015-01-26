@@ -4,11 +4,11 @@
 # https://github.com/marcelotmelo/rabbitmq-cluster
 #
 # based on https://github.com/dockerfile/rabbitmq
-#
-#MAINTAINER marcelomelofilho@gmail.com
 
 # Pull base image.
 FROM dockerfile/ubuntu
+
+MAINTAINER marcelomelofilho@gmail.com
 
 # Add files.
 COPY bin/rabbitmq-start /usr/local/bin/rabbitmq-start 
