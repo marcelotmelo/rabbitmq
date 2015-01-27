@@ -1,31 +1,34 @@
 #
 # RabbitMQ Dockerfile
 #
-# https://github.com/marcelotmelo/rabbitmq-cluster
+# https://github.com/marcelotmelo/rabbitmq-cluster/rhel
 #
 # based on https://github.com/dockerfile/rabbitmq
 
 # Pull base image.
-FROM dockerfile/ubuntu
+FROM rhel-server-docker-6.5-12.x86_64
 
 MAINTAINER marcelomelofilho@gmail.com
 
 # Add files.
-COPY bin/rabbitmq-start /usr/local/bin/rabbitmq-start 
-COPY etc/rabbitmq.config /etc/rabbitmq/rabbitmq.config 
-COPY etc/rabbitmq.json /etc/rabbitmq/rabbitmq.json 
+COPY bin/rabbitmq-start /usr/local/bin/rabbitmq-start
+COPY etc/rabbitmq.config /etc/rabbitmq/rabbitmq.config
+COPY etc/rabbitmq.json /etc/rabbitmq/rabbitmq.json
 COPY etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 
 # Install RabbitMQ.
 RUN \
   chmod 600 /var/lib/rabbitmq/.erlang.cookie && \
-  wget -qO - https://www.rabbitmq.com/rabbitmq-signing-key-public.asc | apt-key add - && \
-  echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.list.d/rabbitmq.list && \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y rabbitmq-server && \
-  rm -rf /var/lib/apt/lists/* && \
+#  curl -L --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u76-b13/jdk-7u76-linux-x64.rpm -o jdk-7u76-linux-x64.rpm && \
+#  echo "993d0d6425951d2a3fe39d8ad2e550fc jdk-7u76-linux-x64.rpm" | md5sum -c && \
+#  rpm -i jdk-7u76-linux-x64.rpm  && \
+  curl -L http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm -o erlang-solutions-1.0-1.noarch.rpm && \
+  rpm -Uvh erlang-solutions-1.0-1.noarch.rpm && \
+  yum install erlang && \
+  rpm --import http://www.rabbitmq.com/rabbitmq-signing-key-public.asc && \
+  yum install rabbitmq-server--1.noarch.rpm && \
   rabbitmq-plugins enable rabbitmq_management rabbitmq_federation rabbitmq_federation_management && \
-  chmod +x /usr/local/bin/rabbitmq-start 
+#  chmod +x /usr/local/bin/rabbitmq-start
 #  chown rabbitmq. /var/lib/rabbitmq/.erlang.cookie && \
 
 # Define environment variables.
@@ -47,4 +50,4 @@ EXPOSE 15672
 
 # Cluster ports.
 EXPOSE 4369
-EXPOSE 25672 
+EXPOSE 25672
