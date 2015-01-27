@@ -11,10 +11,10 @@ FROM dockerfile/ubuntu
 MAINTAINER marcelomelofilho@gmail.com
 
 # Add files.
-COPY bin/rabbitmq-start /usr/local/bin/rabbitmq-start 
-COPY etc/rabbitmq.config /etc/rabbitmq/rabbitmq.config 
-COPY etc/rabbitmq.json /etc/rabbitmq/rabbitmq.json 
-COPY etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
+COPY ../common/bin/rabbitmq-start /usr/local/bin/rabbitmq-start 
+COPY ../common/etc/rabbitmq.config /etc/rabbitmq/rabbitmq.config 
+COPY ../common/etc/rabbitmq.json /etc/rabbitmq/rabbitmq.json 
+COPY ../common/etc/erlang.cookie /var/lib/rabbitmq/.erlang.cookie
 
 # Install RabbitMQ.
 RUN \
