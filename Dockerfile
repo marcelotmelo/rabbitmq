@@ -1,7 +1,7 @@
 #
 # RabbitMQ Dockerfile
 #
-# https://github.com/marcelotmelo/rabbitmq-cluster/ubuntu
+# https://github.com/marcelotmelo/rabbitmq-cluster
 #
 # based on https://github.com/dockerfile/rabbitmq
 
