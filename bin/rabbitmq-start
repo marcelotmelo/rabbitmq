@@ -1,0 +1,24 @@
+#!/bin/bash
+
+ulimit -n 1024
+chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
+chown -R rabbitmq:rabbitmq /var/log/rabbitmq
+
+if [ -z "$CLUSTER_WITH" ]; then
+	# If clustered, but cluster with is not specified then again start normally, could be the first server in the
+	# cluster
+        echo "Running standalone, no cluster..."
+        exec rabbitmq-server
+else
+        echo "Running in cluster mode with [rabbit@$CLUSTER_WITH]..."
+	rabbitmq-server -detached 
+	rabbitmqctl stop_app
+	if [ -z "$RAM_NODE" ]; then
+        	rabbitmqctl join_cluster rabbit@$CLUSTER_WITH
+	else
+		rabbitmqctl join_cluster --ram rabbit@$CLUSTER_WITH
+	fi
+	rabbitmqctl start_app
+	# Tail to keep the foreground process active..
+	tail -f /var/log/rabbitmq/rabbit\@$HOSTNAME.log
+fi
